@@ -136,3 +136,257 @@ body {
     font-size: 40px;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   THEME TOGGLE  —  type "TURN" to switch between Blue ↔ Red palette
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* Register --accentColor as an animatable CSS property */
+@property --accentColor {
+  syntax: "<color>";
+  initial-value: #5eead4;
+  inherits: true;
+}
+
+/* Smooth transition on the root when theme changes */
+:root {
+  transition: --accentColor 0.7s ease;
+}
+
+/* ── Ambient lights — add transition so they change smoothly ──────────── */
+.landing-circle1,
+.landing-circle2,
+.character-rim {
+  transition: background-color 0.8s ease, box-shadow 0.8s ease;
+}
+
+/* ── Red / Blood-Red theme override ──────────────────────────────────── */
+[data-theme="red"] {
+  --accentColor: #ef4444;
+}
+
+/* Landing circle 1 — top-left ambient blob → blood red */
+[data-theme="red"] .landing-circle1 {
+  background-color: #8b0000;
+  box-shadow: inset -50px 40px 50px rgba(139, 0, 0, 0.75);
+  filter: blur(60px);
+}
+
+/* Landing circle 2 — right edge blob → blood red */
+[data-theme="red"] .landing-circle2 {
+  background-color: #8b0000;
+  box-shadow: inset -50px 40px 50px rgba(139, 0, 0, 0.75);
+  filter: blur(50px);
+}
+
+/* Character rim glow under the model → blood red */
+[data-theme="red"] .character-rim {
+  background-color: #7f0000;
+  box-shadow: inset 66px 35px 85px 0px rgba(127, 0, 0, 0.75);
+}
+
+/* All accent-coloured elements inherit the smooth transition */
+[data-theme="red"] *,
+[data-theme="red"] *::before,
+[data-theme="red"] *::after {
+  /* Only transition colour-related properties — don't affect transforms/opacity */
+  transition-property: color, border-color, box-shadow, background-color, outline-color;
+  transition-duration: 0.7s;
+  transition-timing-function: ease;
+}
+
+/* ── Ripple burst (created & removed in JS) ──────────────────────────── */
+@keyframes themeRipple {
+  0%   { width: 0;        height: 0;        opacity: 0.65; }
+  60%  { opacity: 0.35; }
+  100% { width: 300vmax;  height: 300vmax;  opacity: 0; }
+}
+
+/* ── Toast notification (created & removed in JS) ────────────────────── */
+@keyframes themeToast {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(24px) scale(0.9); }
+  12%  { opacity: 1; transform: translateX(-50%) translateY(0)    scale(1);   }
+  75%  { opacity: 1; transform: translateX(-50%) translateY(0)    scale(1);   }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-12px) scale(0.95); }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   COMPREHENSIVE RED OVERRIDES — every hardcoded teal/cyan colour
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Landing ────────────────────────────────────────────────────────── */
+[data-theme="red"] h2.landing-info-h2 { color: #dc2626; }
+
+/* ── Career — force all card accent vars to red shades ─────────────── */
+[data-theme="red"] .career-card { --card-color: #ef4444; }
+[data-theme="red"] .career-card-1 { --card-color: #ef4444; }
+[data-theme="red"] .career-card-2 { --card-color: #dc2626; }
+[data-theme="red"] .career-card-3 { --card-color: #b91c1c; }
+[data-theme="red"] .career-card-4 { --card-color: #f87171; }
+
+/* Career aurora blobs */
+[data-theme="red"] .career-aurora-1 { background: radial-gradient(ellipse, rgba(139,0,0,0.22), transparent 70%); }
+[data-theme="red"] .career-aurora-2 { background: radial-gradient(ellipse, rgba(220,38,38,0.14), transparent 70%); }
+[data-theme="red"] .career-aurora-3 { background: radial-gradient(ellipse, rgba(239,68,68,0.10), transparent 70%); }
+
+/* Career card icon containers */
+[data-theme="red"] .career-card-icon {
+  background: rgba(239,68,68,0.07);
+  border-color: rgba(239,68,68,0.18);
+}
+[data-theme="red"] .career-card:hover .career-card-icon,
+[data-theme="red"] .career-card-open .career-card-icon {
+  background: rgba(239,68,68,0.15);
+  border-color: rgba(239,68,68,0.45);
+}
+
+/* ── About — chip borders/backgrounds ──────────────────────────────── */
+[data-theme="red"] .about-chip {
+  border-color: rgba(239,68,68,0.35);
+  background: rgba(239,68,68,0.05);
+}
+[data-theme="red"] .about-chip:hover {
+  background: rgba(239,68,68,0.15);
+  border-color: #ef4444;
+  box-shadow: 0 4px 14px rgba(239,68,68,0.18);
+}
+
+/* ── WhatIDo ────────────────────────────────────────────────────────── */
+/* Scan-line sweep */
+[data-theme="red"] .what-scan {
+  background: linear-gradient(90deg, transparent, rgba(239,68,68,0.6), transparent);
+}
+/* Corner accent brackets */
+[data-theme="red"] .what-corner-tl,
+[data-theme="red"] .what-corner-tr,
+[data-theme="red"] .what-corner-bl,
+[data-theme="red"] .what-corner-br { border-color: #ef4444; }
+/* Panel icon box */
+[data-theme="red"] .what-panel-icon {
+  background: rgba(239,68,68,0.08);
+  border-color: rgba(239,68,68,0.2);
+}
+[data-theme="red"] .what-noTouch:hover .what-panel-icon,
+[data-theme="red"] .what-panel-active .what-panel-icon {
+  background: rgba(239,68,68,0.15);
+  border-color: rgba(239,68,68,0.5);
+}
+/* Tags */
+[data-theme="red"] .what-noTouch:hover .what-tags,
+[data-theme="red"] .what-panel-active .what-tags {
+  background-color: rgba(239,68,68,0.12);
+  border-color: rgba(239,68,68,0.4);
+}
+/* Panel active glow border */
+[data-theme="red"] .what-panel.what-noTouch:hover,
+[data-theme="red"] .what-panel-active {
+  box-shadow: 0 0 28px -6px rgba(239,68,68,0.5), inset 0 0 60px -30px rgba(239,68,68,0.12);
+}
+
+/* ── Work section ───────────────────────────────────────────────────── */
+/* Scanline sweep */
+[data-theme="red"] .work-scanline {
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(239,68,68,0.3) 15%,
+    #ef4444 40%, #dc2626 50%,
+    #ef4444 60%, rgba(239,68,68,0.3) 85%,
+    transparent 100%
+  );
+  box-shadow: 0 0 12px 3px rgba(239,68,68,0.7), 0 0 35px 10px rgba(239,68,68,0.25);
+}
+/* Floating geo shapes */
+[data-theme="red"] .work-geo-1 {
+  border-color: rgba(239,68,68,0.2);
+  background: linear-gradient(135deg, rgba(239,68,68,0.08), transparent);
+}
+[data-theme="red"] .work-geo-2 {
+  border-color: rgba(220,38,38,0.15);
+  background: rgba(220,38,38,0.05);
+}
+[data-theme="red"] .work-geo-3 {
+  border-color: rgba(239,68,68,0.18);
+  background: rgba(239,68,68,0.04);
+}
+/* Arrow hover */
+[data-theme="red"] .carousel-arrow:hover {
+  background: rgba(239,68,68,0.15);
+  box-shadow: 0 0 20px rgba(239,68,68,0.15);
+}
+/* Active dot */
+[data-theme="red"] .carousel-dot-active {
+  box-shadow: 0 0 8px rgba(239,68,68,0.4);
+}
+
+/* ── Contact ────────────────────────────────────────────────────────── */
+/* Aurora blobs */
+[data-theme="red"] .contact-aurora-1 { background: radial-gradient(ellipse, rgba(139,0,0,0.22), transparent 70%); }
+[data-theme="red"] .contact-aurora-2 { background: radial-gradient(ellipse, rgba(220,38,38,0.14), transparent 70%); }
+[data-theme="red"] .contact-aurora-3 { background: radial-gradient(ellipse, rgba(239,68,68,0.10), transparent 70%); }
+/* Holographic rotating card border */
+[data-theme="red"] .contact-box::before {
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    transparent 0deg,
+    rgba(239,68,68,0.5) 60deg,
+    rgba(220,38,38,0.3) 120deg,
+    transparent 180deg,
+    rgba(239,68,68,0.2) 300deg,
+    transparent 360deg
+  );
+}
+/* CTA button */
+[data-theme="red"] .contact-cta-btn {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  box-shadow: 0 4px 24px rgba(239,68,68,0.3);
+}
+[data-theme="red"] .contact-cta-btn::before {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+}
+[data-theme="red"] .contact-cta-btn:hover {
+  box-shadow: 0 8px 36px rgba(239,68,68,0.5);
+}
+/* Title gradient word */
+[data-theme="red"] .contact-title span {
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+[data-theme="red"] .contact-title span::after {
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+/* Contact row + icon boxes */
+[data-theme="red"] .contact-row:hover {
+  background: rgba(239,68,68,0.06);
+  border-color: rgba(239,68,68,0.2);
+}
+[data-theme="red"] .contact-row-icon,
+[data-theme="red"] .contact-social-icon,
+[data-theme="red"] .education-icon {
+  background: rgba(239,68,68,0.08);
+  border-color: rgba(239,68,68,0.18);
+}
+/* Social link hover */
+[data-theme="red"] a.contact-social:hover {
+  border-color: rgba(239,68,68,0.3);
+  box-shadow: 0 4px 20px rgba(239,68,68,0.1);
+}
+/* Education row hover */
+[data-theme="red"] .education-item:hover {
+  background: rgba(239,68,68,0.05);
+  border-color: rgba(239,68,68,0.18);
+}
+/* Contact box hover glow */
+[data-theme="red"] .contact-box:hover {
+  box-shadow: 0 12px 40px rgba(239,68,68,0.12);
+  border-color: rgba(239,68,68,0.25);
+}
+/* Copy button */
+[data-theme="red"] .copy-btn:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+  background: rgba(239,68,68,0.08);
+}
+/* Dot grid tint */
+[data-theme="red"] .contact-grid {
+  background-image: radial-gradient(rgba(239,68,68,0.07) 1px, transparent 1px);
+}
