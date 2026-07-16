@@ -161,11 +161,11 @@ const Contact = () => {
               </span>
               <MdArrowOutward className="contact-social-arrow" />
             </a>
-            <a href="https://www.linkedin.com/in/maddan-m" target="_blank" rel="noreferrer" className="contact-social" data-cursor="disable">
+            <a href="https://www.linkedin.com/in/maddan" target="_blank" rel="noreferrer" className="contact-social" data-cursor="disable">
               <span className="contact-social-icon"><IconLinkedIn /></span>
               <span className="contact-social-text">
                 <span className="contact-social-name">LinkedIn</span>
-                <span className="contact-social-handle">maddan-m</span>
+                <span className="contact-social-handle">maddan</span>
               </span>
               <MdArrowOutward className="contact-social-arrow" />
             </a>
